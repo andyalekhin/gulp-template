@@ -1,0 +1,94 @@
+$xs: 575px;
+$sm: 767px;
+$md: 991px;
+$lg: 1259px;
+$xl: 1559px;
+
+$columns: 12;
+$offset: 15px;
+
+@mixin container {
+	width: 100%;
+	padding-left: $offset;
+	padding-right: $offset;
+	margin-right: auto;
+	margin-left: auto;
+
+	@media (min-width: $xs + 1px) {
+		max-width: 540px;
+	}
+	@media (min-width: $sm + 1px) {
+		max-width: 720px;
+	}
+	@media (min-width: $md + 1px) {
+		max-width: 960px;
+	}
+	@media (min-width: $lg + 1px) {
+		max-width: 1200px;
+	}
+}
+
+@mixin row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-left: -$offset;
+	margin-right: -$offset;
+}
+
+@mixin col($n) {
+	width: calc( #{100% / $columns * $n} - #{$offset * 2} );
+	margin-left: $offset;
+	margin-right: $offset;
+}
+
+@mixin col-padding($n) {
+	width: 100% / $columns * $n;
+	padding-left: $offset;
+	padding-right: $offset;
+}
+
+@mixin size($n) {
+	width: calc( #{100% / $columns * $n} - #{$offset * 2} );
+}
+
+@mixin size-padding($n) {
+	width: 100% / $columns * $n;
+}
+
+.container {
+	@include container;
+}
+
+.row {
+	@include row;
+}
+
+@mixin xs {
+	@media (max-width: $xs) {
+		@content;
+	}
+}
+
+@mixin sm {
+	@media (max-width: $sm) {
+		@content;
+	}
+}
+
+@mixin md {
+	@media (max-width: $md) {
+		@content;
+	}
+}
+
+@mixin lg {
+	@media (max-width: $lg) {
+		@content;
+	}
+}
+
+@mixin xl {
+	@media (max-width: $xl) {
+		@content;
+	}
+}
