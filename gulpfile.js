@@ -18,7 +18,17 @@ const cssnano = require('cssnano');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
+const name = 'gulp-template';
+const production = false;
 const path = {
+    src: {
+        html: 'src/html',
+        css: 'src/scss',
+        js: 'src/js',
+        img: 'src/img',
+        fonts: 'src/fonts',
+        video: 'src/video',
+    },
     public: {
         html: 'public',
         css: 'public/css',
@@ -28,8 +38,6 @@ const path = {
         video: 'public/video',
     }
 };
-
-const production = false;
 
 function browserSync(done) {
     browsersync.init({
@@ -42,7 +50,7 @@ function browserSync(done) {
 }
 
 function html() {
-    return gulp.src('src/html/*.html')
+    return gulp.src(`${path.src.html}/*.html`)
         .pipe(plumber())
         .pipe(rigger())
         .pipe(gulp.dest(path.public.html))
@@ -50,7 +58,7 @@ function html() {
 }
 
 function css() {
-    return gulp.src('src/scss/style.scss')
+    return gulp.src(`${path.src.css}/style.scss`)
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass({
@@ -69,7 +77,7 @@ function css() {
 }
 
 function js() {
-    return gulp.src('src/js/**/*.js')
+    return gulp.src(`${path.src.js}/**/*`)
         .pipe(plumber())
         .pipe(gulpif(production, uglify()))
         .pipe(gulp.dest(path.public.js))
@@ -87,30 +95,30 @@ function jsLibs() {
 }
 
 function img() {
-    return gulp.src('src/img/**/*')
+    return gulp.src(`${path.src.img}/**/*`)
         .pipe(gulp.dest(path.public.img))
         .pipe(browsersync.stream())
 }
 
 function fonts() {
-    return gulp.src('src/fonts/**/*')
+    return gulp.src(`${path.src.fonts}/**/*`)
         .pipe(gulp.dest(path.public.fonts))
         .pipe(browsersync.stream())
 }
 
 function video() {
-    return gulp.src('src/video/**/*')
+    return gulp.src(`${path.src.video}/**/*`)
         .pipe(gulp.dest(path.public.video))
         .pipe(browsersync.stream())
 }
 
 function watch() {
-    gulp.watch('src/html/**/*.html', html);
-    gulp.watch('src/scss/**/*.scss', css);
-    gulp.watch('src/js/**/*.js', js);
-    gulp.watch('src/img/**/*', img);
-    gulp.watch('src/fonts/**/*', fonts);
-    gulp.watch('src/video/**/*', video);
+    gulp.watch(`${path.src.html}/**/*.html`, html);
+    gulp.watch(`${path.src.css}/**/*.scss`, css);
+    gulp.watch(`${path.src.js}/**/*`, js);
+    gulp.watch(`${path.src.img}/**/*`, img);
+    gulp.watch(`${path.src.fonts}/**/*`, fonts);
+    gulp.watch(`${path.src.video}/**/*`, video);
 }
 
 exports.default = gulp.series(
