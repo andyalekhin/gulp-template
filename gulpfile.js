@@ -121,6 +121,23 @@ function watch() {
     gulp.watch(`${path.src.video}/**/*`, video);
 }
 
+function deploy(done) {
+    var conn = ftp.create({
+        host:     '',
+        user:     '',
+        password: '',
+        parallel: 1,
+        log:      gutil.log
+    });
+    
+    conn.rmdir(name, function() {
+        gulp.src(['public/**'], {base: './public', buffer: false})
+        .pipe(conn.dest(name));
+    });
+    
+    done();
+}
+
 exports.default = gulp.series(
     gulp.parallel(
         html, css, js, jsLibs, img, fonts, video,
@@ -128,3 +145,5 @@ exports.default = gulp.series(
     browserSync,
     watch
 );
+
+exports.deploy = gulp.series(deploy);
