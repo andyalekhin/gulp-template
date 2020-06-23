@@ -18,6 +18,9 @@ const cssnano = require('cssnano');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
+const ftp = require('vinyl-ftp');
+const gutil = require('gulp-util');
+
 const name = 'gulp-template';
 const production = false;
 const path = {
