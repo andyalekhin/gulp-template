@@ -1,4 +1,4 @@
-// npm i -D gulp gulp-if gulp-plumber browser-sync gulp-rigger gulp-sass gulp-sourcemaps gulp-postcss autoprefixer cssnano gulp-concat gulp-uglify vinyl-ftp gulp-util
+// npm i -D gulp gulp-if gulp-plumber browser-sync gulp-rigger gulp-sass gulp-sourcemaps gulp-postcss autoprefixer cssnano gulp-concat gulp-uglify del vinyl-ftp gulp-util
 // npm i normalize.css jquery
 
 'use strict';
@@ -18,6 +18,7 @@ const cssnano = require('cssnano');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
+const del = require('del');
 const ftp = require('vinyl-ftp');
 const gutil = require('gulp-util');
 
@@ -124,6 +125,10 @@ function watch() {
     gulp.watch(`${path.src.video}/**/*`, video);
 }
 
+function clean() {
+    return del(['public']);
+}
+
 function deploy(done) {
     var conn = ftp.create({
         host:     '',
@@ -142,6 +147,7 @@ function deploy(done) {
 }
 
 exports.default = gulp.series(
+    clean,
     gulp.parallel(
         html, css, js, jsLibs, img, fonts, video,
     ),
@@ -149,4 +155,5 @@ exports.default = gulp.series(
     watch
 );
 
+exports.clean = gulp.series(clean);
 exports.deploy = gulp.series(deploy);
