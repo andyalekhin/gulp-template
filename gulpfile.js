@@ -42,6 +42,13 @@ const path = {
         video: 'public/video',
     }
 };
+const conn = ftp.create({
+    host:     '',
+    user:     '',
+    password: '',
+    parallel: 1,
+    log:      gutil.log
+});
 
 function browserSync(done) {
     browsersync.init({
@@ -129,21 +136,13 @@ function clean() {
     return del(['public']);
 }
 
-function deploy(done) {
-    var conn = ftp.create({
-        host:     '',
-        user:     '',
-        password: '',
-        parallel: 1,
-        log:      gutil.log
-    });
-    
-    conn.rmdir(name, function() {
-        gulp.src(['public/**'], {base: './public', buffer: false})
+function cleanFtp(done) {
+    return conn.rmdir(name, done)
+}
+
+function deploy() {
+    return gulp.src(['public/**'], {base: './public', buffer: false})
         .pipe(conn.dest(name));
-    });
-    
-    done();
 }
 
 exports.default = gulp.series(
@@ -156,4 +155,4 @@ exports.default = gulp.series(
 );
 
 exports.clean = gulp.series(clean);
-exports.deploy = gulp.series(deploy);
+exports.deploy = gulp.series(cleanFtp, deploy);
