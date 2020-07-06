@@ -145,14 +145,11 @@ function deploy() {
         .pipe(conn.dest(name));
 }
 
-exports.default = gulp.series(
+const build = gulp.series(
     clean,
-    gulp.parallel(
-        html, css, js, jsLibs, img, fonts, video,
-    ),
-    browserSync,
-    watch
+    gulp.parallel(html, css, js, jsLibs, img, fonts, video)
 );
 
-exports.clean = gulp.series(clean);
-exports.deploy = gulp.series(cleanFtp, deploy);
+exports.build = build;
+exports.deploy = gulp.series(build, cleanFtp, deploy);
+exports.default = gulp.series(build, browserSync, watch);
