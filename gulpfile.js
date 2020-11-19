@@ -1,4 +1,4 @@
-// npm i -D gulp gulp-if gulp-plumber browser-sync gulp-rigger gulp-sass gulp-sourcemaps gulp-postcss autoprefixer cssnano gulp-concat gulp-uglify del vinyl-ftp gulp-util
+// npm i -D gulp gulp-if gulp-plumber browser-sync gulp-rigger gulp-htmlmin gulp-sass gulp-sourcemaps gulp-postcss autoprefixer cssnano gulp-concat gulp-uglify del vinyl-ftp gulp-util
 // npm i normalize.css jquery
 
 'use strict';
@@ -64,6 +64,7 @@ function html() {
     return gulp.src(`${path.src.html}/*.html`)
         .pipe(plumber())
         .pipe(rigger())
+        .pipe(gulpif(production, htmlmin({collapseWhitespace: true})))
         .pipe(gulp.dest(path.public.html))
         .pipe(browsersync.stream())
 }
