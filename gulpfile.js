@@ -8,6 +8,7 @@ const gulpif = require('gulp-if');
 const plumber = require('gulp-plumber');
 const browsersync = require('browser-sync').create();
 const rigger = require('gulp-rigger');
+const htmlmin = require('gulp-htmlmin');
 
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
