@@ -5,7 +5,7 @@
 
 // layout
 @import 'mixins';
-@import 'layout/normalize';
+@import './node_modules/normalize.css/normalize';
 @import 'layout/general';
 
 @import 'layout/fonts';
