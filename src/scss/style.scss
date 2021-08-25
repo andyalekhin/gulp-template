@@ -4,18 +4,14 @@
 */
 
 // layout
-@import 'mixins';
+@import '_variables';
+@import '_mixins';
+@import 'layout/fonts';
 @import './node_modules/normalize.css/normalize';
 @import 'layout/general';
-
-@import 'layout/fonts';
-@import 'layout/grid';
-
 @import 'layout/layout';
 @import 'layout/header';
 @import 'layout/footer';
-
-// libs
 
 // components
 

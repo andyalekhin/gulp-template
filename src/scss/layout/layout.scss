@@ -16,3 +16,11 @@
 .footer {
     flex: 0 0 auto;
 }
+
+.container {
+    @include container;
+}
+
+.row {
+    @include row;
+}

@@ -1,3 +1,6 @@
+
+
+
 @mixin reset-list {
     margin: 0;
     padding: 0;
@@ -10,4 +13,103 @@
     border-radius: 0;
     background-color: transparent;
     outline: none;
+}
+
+
+
+@mixin container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: $offset;
+    padding-right: $offset;
+
+    @media (min-width: $xs + 1px) {
+        max-width: 540px;
+    }
+    @media (min-width: $sm + 1px) {
+        max-width: 720px;
+    }
+    @media (min-width: $md + 1px) {
+        max-width: 960px;
+    }
+    @media (min-width: $lg + 1px) {
+        max-width: 1200px;
+    }
+}
+
+@mixin row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -$offset;
+    margin-right: -$offset;
+}
+
+@mixin col($n: 'auto') {
+    margin-left: $offset;
+    margin-right: $offset;
+    
+    @if $n == 'auto' {
+        width: auto;
+    } @else {
+        width: calc(#{100% / $columns * $n} - #{$offset * 2});
+    }
+}
+
+@mixin size($n) {
+    width: calc(#{100% / $columns * $n} - #{$offset * 2});
+}
+
+@mixin offset($n) {
+    margin-left: calc(#{100% / $columns * $n} + #{$offset});
+}
+
+
+
+@mixin xs($media: min) {
+    @if $media == min {
+        @media (min-width: $xs) {
+            @content;
+        }
+    } @else {
+        @media (max-width: $xs - 1px) {
+            @content;
+        }
+    }
+}
+
+@mixin sm($media: min) {
+    @if $media == min {
+        @media (min-width: $sm) {
+            @content;
+        }
+    } @else {
+        @media (max-width: $sm - 1px) {
+            @content;
+        }
+    }
+}
+
+@mixin md($media: min) {
+    @if $media == min {
+        @media (min-width: $md) {
+            @content;
+        }
+    } @else {
+        @media (max-width: $md - 1px) {
+            @content;
+        }
+    }
+}
+
+@mixin lg($media: min) {
+    @if $media == min {
+        @media (min-width: $lg) {
+            @content;
+        }
+    } @else {
+        @media (max-width: $lg - 1px) {
+            @content;
+        }
+    }
 }

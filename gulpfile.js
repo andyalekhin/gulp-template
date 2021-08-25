@@ -34,13 +34,13 @@ const path = {
         fonts: 'src/fonts',
         video: 'src/video',
     },
-    public: {
-        html: 'public',
-        css: 'public/css',
-        js: 'public/js',
-        img: 'public/img',
-        fonts: 'public/fonts',
-        video: 'public/video',
+    dist: {
+        html: 'dist',
+        css: 'dist/css',
+        js: 'dist/js',
+        img: 'dist/img',
+        fonts: 'dist/fonts',
+        video: 'dist/video',
     }
 };
 const conn = ftp.create({
@@ -54,7 +54,7 @@ const conn = ftp.create({
 function browserSync(done) {
     browsersync.init({
         server: {
-            baseDir: path.public.html
+            baseDir: path.dist.html
         },
         port: 3000
     });
@@ -66,7 +66,7 @@ function html() {
         .pipe(plumber())
         .pipe(rigger())
         .pipe(gulpif(production, htmlmin({collapseWhitespace: true})))
-        .pipe(gulp.dest(path.public.html))
+        .pipe(gulp.dest(path.dist.html))
         .pipe(browsersync.stream())
 }
 
@@ -85,7 +85,7 @@ function css() {
                 cssnano()
             ]))
         )
-        .pipe(gulp.dest(path.public.css))
+        .pipe(gulp.dest(path.dist.css))
         .pipe(browsersync.stream())
 }
 
@@ -93,7 +93,7 @@ function js() {
     return gulp.src(`${path.src.js}/**/*`)
         .pipe(plumber())
         .pipe(gulpif(production, uglify()))
-        .pipe(gulp.dest(path.public.js))
+        .pipe(gulp.dest(path.dist.js))
         .pipe(browsersync.stream())
 }
 
@@ -103,25 +103,25 @@ function jsLibs() {
     ])
     .pipe(gulpif(production, uglify()))
     .pipe(concat('libs.js'))
-    .pipe(gulp.dest(path.public.js))
+    .pipe(gulp.dest(path.dist.js))
     .pipe(browsersync.stream())
 }
 
 function img() {
     return gulp.src(`${path.src.img}/**/*`)
-        .pipe(gulp.dest(path.public.img))
+        .pipe(gulp.dest(path.dist.img))
         .pipe(browsersync.stream())
 }
 
 function fonts() {
     return gulp.src(`${path.src.fonts}/**/*`)
-        .pipe(gulp.dest(path.public.fonts))
+        .pipe(gulp.dest(path.dist.fonts))
         .pipe(browsersync.stream())
 }
 
 function video() {
     return gulp.src(`${path.src.video}/**/*`)
-        .pipe(gulp.dest(path.public.video))
+        .pipe(gulp.dest(path.dist.video))
         .pipe(browsersync.stream())
 }
 
@@ -135,7 +135,7 @@ function watch() {
 }
 
 function clean() {
-    return del(['public']);
+    return del(['dist']);
 }
 
 function cleanFtp(done) {
@@ -143,7 +143,7 @@ function cleanFtp(done) {
 }
 
 function deploy() {
-    return gulp.src(['public/**'], {base: './public', buffer: false})
+    return gulp.src(['dist/**'], {base: './dist', buffer: false})
         .pipe(conn.dest(name));
 }
 
